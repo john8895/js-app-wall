@@ -22,9 +22,14 @@ function countdown() {
     const seconds = Math.floor(totalSeconds) % 60;
 
     daysEl.innerHTML = days;
-    hoursEl.innerHTML = hours;
-    minsEl.innerHTML = mins;
-    secondsEl.innerHTML = seconds;
+    hoursEl.innerHTML = formatTime(hours);
+    minsEl.innerHTML = formatTime(mins);
+    secondsEl.innerHTML = formatTime(seconds);
+}
+
+// 個位數補 0
+function formatTime(time){
+    return time < 10 ? `0${time}` : time;
 }
 
 function currentYearOldCount() {
@@ -43,10 +48,10 @@ function currentYearOldCount() {
     const week = Math.floor(totalYearOldSeconds / 3600 / 24 / 7);
     const year = Math.floor(totalYearOldSeconds / 3600 / 24 / 365);
 
-    daysEl.innerHTML = days;
-    monthEl.innerHTML = month;
-    weekEl.innerHTML = week;
-    yearEl.innerHTML = year;
+    daysEl.innerHTML = formatTime(days);
+    monthEl.innerHTML = formatTime(month);
+    weekEl.innerHTML = formatTime(week);
+    yearEl.innerHTML = formatTime(year);
 }
 
 countdown();
