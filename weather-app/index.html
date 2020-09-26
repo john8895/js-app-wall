@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>Weather App</title>
+    <!--    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.min.css" integrity="sha512-q3eWabyZPc1XTCmF+8/LuE1ozpg5xxn7iO89yfSOd5/oKvyqLngoNGsx8jq92Y8eXJ/IRxQbEC+FGSYxtk2oiw==" crossorigin="anonymous" />-->
+    <!--    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha512-MoRNloxbStBcD8z3M/2BmnT+rg4IsMxPkXaGh2zD6LGNNFE80W3onsAhRcMAMrSoyWL9xD7Ert0men7vR8LUZg==" crossorigin="anonymous" />-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.11/vue.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.2/axios.min.js"></script>
+<!--    <script src="https://unpkg.com/vue-router/dist/vue-router.js"></script>-->
+
+    <link rel="stylesheet" href="bs4.css">
+    <link rel="stylesheet" href="font-awesome.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<h1>Weather App</h1>
+
+<div class="weather-container" id="myApp">
+    <div class="weather-header d-flex justify-content-between text-light">
+        <time>20:11</time>
+        <div class="icons d-flex">
+            <i class="fas fa-signal mr-2"></i>
+            <i class="fas fa-wifi mr-2"></i>
+            <i class="fas fa-battery-quarter"></i>
+        </div>
+    </div>
+
+    <div class="weather-temper text-center">
+        <div class="location">
+            <h4 v-text="currentLocation" ref="display">南區</h4>
+            <span>多雲時陰</span>
+        </div>
+        <div class="temperature"><span v-text="currTemp">27</span>°</div>
+    </div>
+    <div class="forecast">
+        <div class="today d-flex justify-content-between">
+            <time>
+                <span>星期二</span>
+                <span>今天</span>
+            </time>
+            <div class="today_temp">
+                <span class="mr-2">33</span>
+                <span>25</span>
+            </div>
+        </div>
+        <hr>
+        <div class="per-hour">
+            <div class="per-hour-item current-time">
+                <ul>
+                    <li>現在</li>
+                    <li>0%</li>
+                    <li><i class="fas fa-cloud-sun-rain"></i></li>
+                    <li>27°</li>
+                </ul>
+            </div>
+            <div class="per-hour-item">
+                <ul>
+                    <li>21時</li>
+                    <li>60%</li>
+                    <li><i class="fas fa-cloud-sun-rain"></i></li>
+                    <li>27°</li>
+                </ul>
+            </div>
+            <div class="per-hour-item">
+                <ul>
+                    <li>22時</li>
+                    <li>60%</li>
+                    <li><i class="fas fa-cloud-sun-rain"></i></li>
+                    <li>27°</li>
+                </ul>
+            </div>
+            <div class="per-hour-item">
+                <ul>
+                    <li>23時</li>
+                    <li>60%</li>
+                    <li><i class="fas fa-cloud-sun-rain"></i></li>
+                    <li>27°</li>
+                </ul>
+            </div>
+            <div class="per-hour-item">
+                <ul>
+                    <li>0時</li>
+                    <li>60%</li>
+                    <li><i class="fas fa-cloud-sun-rain"></i></li>
+                    <li>27°</li>
+                </ul>
+            </div>
+            <div class="per-hour-item">
+                <ul>
+                    <li>1時</li>
+                    <li>60%</li>
+                    <li><i class="fas fa-cloud-sun-rain"></i></li>
+                    <li>27°</li>
+                </ul>
+            </div>
+            <div class="per-hour-item">
+                <ul>
+                    <li>2時</li>
+                    <li>60%</li>
+                    <li><i class="fas fa-cloud-sun-rain"></i></li>
+                    <li>27°</li>
+                </ul>
+            </div>
+        </div>
+        <!--    pre-hour    -->
+        <hr>
+        <div class="per-day">
+            <ul>
+                <li class="per-day-item">
+                    <div class="week">星期三</div>
+                    <div class="weather-status">
+                        <i class="fas fa-cloud-sun-rain"></i>
+                    </div>
+                    <div class="temp">
+                        <span>33</span>
+                        <span>25</span>
+                    </div>
+                </li>
+                <li class="per-day-item">
+                    <div class="week">星期四</div>
+                    <div class="weather-status">
+                        <i class="fas fa-cloud-sun-rain"></i>
+                    </div>
+                    <div class="temp">
+                        <span>33</span>
+                        <span>25</span>
+                    </div>
+                </li>
+                <li class="per-day-item">
+                    <div class="week">星期五</div>
+                    <div class="weather-status">
+                        <i class="fas fa-cloud-sun-rain"></i>
+                    </div>
+                    <div class="temp">
+                        <span>33</span>
+                        <span>25</span>
+                    </div>
+                </li>
+                <li class="per-day-item">
+                    <div class="week">星期六</div>
+                    <div class="weather-status">
+                        <i class="fas fa-cloud-sun-rain"></i>
+                    </div>
+                    <div class="temp">
+                        <span>33</span>
+                        <span>25</span>
+                    </div>
+                </li>
+            </ul>
+
+        </div>
+        <hr>
+
+        <div class="weather-footer d-flex justify-content-between">
+            <div class="source">
+                <a href="https://opendata.cwb.gov.tw/dist/opendata-swagger.html" target="_blank" title="中央氣象局開放資料平臺之資料擷取API">
+                    <img src="https://opendata.cwb.gov.tw/dist/plugins/swagger/favicon-16x16.png" alt="">
+                </a>
+            </div>
+            <div>
+                <button class="change-location" onclick="vm.toggleSidebar();">
+                    <i class="fas fa-sliders-h"></i>
+                </button>
+            </div>
+
+        </div>
+
+
+
+    </div>
+    <div class="weather-sidebar" id="toggleSidebar">
+        <select name="">
+            <option value="0" selected disabled>更改位置</option>
+            <option value="台北市">台北市</option>
+            <option value="新北市">新北市</option>
+            <option value="台北市">台北市</option>
+        </select>
+    </div>
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+    <hr class="bottom-line">
+
+</div>
+
+
+<script src="script.js"></script>
+</body>
+</html>
