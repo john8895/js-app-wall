@@ -19,7 +19,7 @@
 
 <div class="weather-container" id="myApp">
     <div class="weather-header d-flex justify-content-between text-light">
-        <time>20:11</time>
+        <time v-text="nowTime">20:11</time>
         <div class="icons d-flex">
             <i class="fas fa-signal mr-2"></i>
             <i class="fas fa-wifi mr-2"></i>
@@ -30,14 +30,14 @@
     <div class="weather-temper text-center">
         <div class="location">
             <h4 v-text="currentLocation" ref="display">南區</h4>
-            <span>多雲時陰</span>
+            <span v-text="currentStatus">多雲時陰</span>
         </div>
-        <div class="temperature"><span v-text="currTemp">27</span>°</div>
+        <div class="temperature"><span v-text="currentTemp">27</span>°</div>
     </div>
     <div class="forecast">
         <div class="today d-flex justify-content-between">
             <time>
-                <span>星期二</span>
+                <span v-text="currentWeekDay">星期二</span>
                 <span>今天</span>
             </time>
             <div class="today_temp">
@@ -51,7 +51,7 @@
                 <ul>
                     <li>現在</li>
                     <li>0%</li>
-                    <li><i class="fas fa-cloud-sun-rain"></i></li>
+                    <li><img :src="currentStatusImg" :alt="currentStatus" :title="currentStatus"></li>
                     <li>27°</li>
                 </ul>
             </div>
