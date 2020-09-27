@@ -4,22 +4,22 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <title>Weather App</title>
-    <!--    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.min.css" integrity="sha512-q3eWabyZPc1XTCmF+8/LuE1ozpg5xxn7iO89yfSOd5/oKvyqLngoNGsx8jq92Y8eXJ/IRxQbEC+FGSYxtk2oiw==" crossorigin="anonymous" />-->
-    <!--    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha512-MoRNloxbStBcD8z3M/2BmnT+rg4IsMxPkXaGh2zD6LGNNFE80W3onsAhRcMAMrSoyWL9xD7Ert0men7vR8LUZg==" crossorigin="anonymous" />-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.min.css"
+          integrity="sha512-q3eWabyZPc1XTCmF+8/LuE1ozpg5xxn7iO89yfSOd5/oKvyqLngoNGsx8jq92Y8eXJ/IRxQbEC+FGSYxtk2oiw=="
+          crossorigin="anonymous"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.min.css"
+          integrity="sha512-MoRNloxbStBcD8z3M/2BmnT+rg4IsMxPkXaGh2zD6LGNNFE80W3onsAhRcMAMrSoyWL9xD7Ert0men7vR8LUZg=="
+          crossorigin="anonymous"/>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.11/vue.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.2/axios.min.js"></script>
-<!--    <script src="https://unpkg.com/vue-router/dist/vue-router.js"></script>-->
-
-    <link rel="stylesheet" href="bs4.css">
-    <link rel="stylesheet" href="font-awesome.css">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 <h1>Weather App</h1>
-
+<div class="weather-bg"></div>
 <div class="weather-container" id="myApp">
     <div class="weather-header d-flex justify-content-between text-light">
-        <time v-text="nowTime">20:11</time>
+        <time><span v-text="nowTime.hour">00</span>:<span v-text="nowTime.minutes">00</span></time>
         <div class="icons d-flex">
             <i class="fas fa-signal mr-2"></i>
             <i class="fas fa-wifi mr-2"></i>
@@ -32,17 +32,17 @@
             <h4 v-text="currentLocation" ref="display">南區</h4>
             <span v-text="currentStatus">多雲時陰</span>
         </div>
-        <div class="temperature"><span v-text="currentTemp">27</span>°</div>
+        <div class="temperature"><span v-text="currentTemper">27</span>°</div>
     </div>
     <div class="forecast">
         <div class="today d-flex justify-content-between">
             <time>
-                <span v-text="currentWeekDay">星期二</span>
+                <span v-text="nowTime.currentDay">星期二</span>
                 <span>今天</span>
             </time>
             <div class="today_temp">
-                <span class="mr-2">33</span>
-                <span>25</span>
+                <span class="mr-2" v-text="currentMaxTemper" title="最高溫度">33</span>
+                <span v-text="currentMinTemper" title="最低溫度">25</span>
             </div>
         </div>
         <hr>
@@ -50,57 +50,17 @@
             <div class="per-hour-item current-time">
                 <ul>
                     <li>現在</li>
-                    <li>0%</li>
+                    <li><span v-text="currentPop">0</span>%</li>
                     <li><img :src="currentStatusImg" :alt="currentStatus" :title="currentStatus"></li>
-                    <li>27°</li>
+                    <li><span v-text="currentTemper">27</span>°</li>
                 </ul>
             </div>
             <div class="per-hour-item">
                 <ul>
-                    <li>21時</li>
-                    <li>60%</li>
-                    <li><i class="fas fa-cloud-sun-rain"></i></li>
-                    <li>27°</li>
-                </ul>
-            </div>
-            <div class="per-hour-item">
-                <ul>
-                    <li>22時</li>
-                    <li>60%</li>
-                    <li><i class="fas fa-cloud-sun-rain"></i></li>
-                    <li>27°</li>
-                </ul>
-            </div>
-            <div class="per-hour-item">
-                <ul>
-                    <li>23時</li>
-                    <li>60%</li>
-                    <li><i class="fas fa-cloud-sun-rain"></i></li>
-                    <li>27°</li>
-                </ul>
-            </div>
-            <div class="per-hour-item">
-                <ul>
-                    <li>0時</li>
-                    <li>60%</li>
-                    <li><i class="fas fa-cloud-sun-rain"></i></li>
-                    <li>27°</li>
-                </ul>
-            </div>
-            <div class="per-hour-item">
-                <ul>
-                    <li>1時</li>
-                    <li>60%</li>
-                    <li><i class="fas fa-cloud-sun-rain"></i></li>
-                    <li>27°</li>
-                </ul>
-            </div>
-            <div class="per-hour-item">
-                <ul>
-                    <li>2時</li>
-                    <li>60%</li>
-                    <li><i class="fas fa-cloud-sun-rain"></i></li>
-                    <li>27°</li>
+                    <li>18時</li>
+                    <li><span v-text="nextPop">60</span>%</li>
+                    <li><img :src="nextStatusImg" :alt="nextWeatherDetail" :title="nextWeatherDetail"></li>
+                    <li><span v-text="nextTemper">27</span>°</li>
                 </ul>
             </div>
         </div>
@@ -108,44 +68,14 @@
         <hr>
         <div class="per-day">
             <ul>
-                <li class="per-day-item">
-                    <div class="week">星期三</div>
+                <li class="per-day-item" v-for="(item, key, index) in featureWeatherData2">
+                    <div class="week">{{ item.day }}</div>
                     <div class="weather-status">
-                        <i class="fas fa-cloud-sun-rain"></i>
+                        <img :src="item.imgPath" :alt="item.detail" :title="item.detail">
                     </div>
                     <div class="temp">
-                        <span>33</span>
-                        <span>25</span>
-                    </div>
-                </li>
-                <li class="per-day-item">
-                    <div class="week">星期四</div>
-                    <div class="weather-status">
-                        <i class="fas fa-cloud-sun-rain"></i>
-                    </div>
-                    <div class="temp">
-                        <span>33</span>
-                        <span>25</span>
-                    </div>
-                </li>
-                <li class="per-day-item">
-                    <div class="week">星期五</div>
-                    <div class="weather-status">
-                        <i class="fas fa-cloud-sun-rain"></i>
-                    </div>
-                    <div class="temp">
-                        <span>33</span>
-                        <span>25</span>
-                    </div>
-                </li>
-                <li class="per-day-item">
-                    <div class="week">星期六</div>
-                    <div class="weather-status">
-                        <i class="fas fa-cloud-sun-rain"></i>
-                    </div>
-                    <div class="temp">
-                        <span>33</span>
-                        <span>25</span>
+                        <span title="最高溫度">{{ item.maxTemper }}</span>
+                        <span title="最低溫度">{{ item.minTemper }}</span>
                     </div>
                 </li>
             </ul>
@@ -155,7 +85,8 @@
 
         <div class="weather-footer d-flex justify-content-between">
             <div class="source">
-                <a href="https://opendata.cwb.gov.tw/dist/opendata-swagger.html" target="_blank" title="中央氣象局開放資料平臺之資料擷取API">
+                <a href="https://opendata.cwb.gov.tw/dist/opendata-swagger.html" target="_blank"
+                   title="中央氣象局開放資料平臺之資料擷取API">
                     <img src="https://opendata.cwb.gov.tw/dist/plugins/swagger/favicon-16x16.png" alt="">
                 </a>
             </div>
@@ -168,22 +99,38 @@
         </div>
 
 
-
     </div>
     <div class="weather-sidebar" id="toggleSidebar">
-        <select name="">
-            <option value="0" selected disabled>更改位置</option>
-            <option value="台北市">台北市</option>
+        <h3 class="h3 mb-3">請選擇縣市</h3>
+        <select v-model="selectLocation" @change="changeLocation" class="form-control form-control-lg">
+            <option value="0" disabled>更改位置</option>
+            <option value="臺北市">臺北市</option>
             <option value="新北市">新北市</option>
-            <option value="台北市">台北市</option>
+            <option value="臺中市">臺中市</option>
+            <option value="臺南市">臺南市</option>
+            <option value="高雄市">高雄市</option>
+            <option value="基隆市">基隆市</option>
+            <option value="嘉義市">嘉義市</option>
+            <option value="桃園縣">桃園縣</option>
+            <option value="新竹縣">新竹縣</option>
+            <option value="苗栗縣">苗栗縣</option>
+            <option value="彰化縣">彰化縣</option>
+            <option value="南投縣">南投縣</option>
+            <option value="雲林縣">雲林縣</option>
+            <option value="嘉義縣">嘉義縣</option>
+            <option value="屏東縣">屏東縣</option>
+            <option value="宜蘭縣">宜蘭縣</option>
+            <option value="花蓮縣">花蓮縣</option>
+            <option value="台東縣">台東縣</option>
+            <option value="澎湖縣">澎湖縣</option>
+            <option value="連江縣">連江縣</option>
         </select>
+        <!--        <span>你選擇的是 {{ selectLocation }}</span>-->
     </div>
     <div class="sidebar-overlay" id="sidebarOverlay"></div>
     <hr class="bottom-line">
 
 </div>
-
-
 <script src="script.js"></script>
 </body>
 </html>

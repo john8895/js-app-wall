@@ -2,18 +2,29 @@ let vm = new Vue({
     el: '#myApp',
     data: {
         currentLocation: "臺中市",
-        currentTemp: 0,
-        nowTime: '',
-        currentWeekDay: '',
+        selectLocation: '臺中市',
+        currentTemper: 0,
+        nowTime: {},
+
         currentStatus: '',
         currentStatusImg: '',
+        currentMaxTemper: 0,
+        currentMinTemper: 0,
+        currentPop: 0,
+
+        nextPop: 0,
+        nextTemper: 0,
+        nextStatusImg: '',
+        nextWeatherDetail: '',
+
+        afterWeekDay: [],
+        featureWeatherData: {},
+        featureWeatherData2: [],
     },
     mounted: function () {
         this.getWeather();
-        this.getNowTime();
-        // console.log(this.$refs.display.innerText)
+        this.nowTime = this.getNowTime();
     },
-    computed: {},
     methods: {
         toggleSidebar: function () {
             const sidebar = document.getElementById('toggleSidebar')
@@ -32,23 +43,40 @@ let vm = new Vue({
                 }
             }
         },
+        /**
+         *
+         * @return {{hour: (number|string), currentDay: string, minutes: (number|string)}}
+         */
         getNowTime: function () {  // 目前時間
             const timeDate = new Date();
-            // console.log('timeDate:', timeDate);
             const tMonth = (timeDate.getMonth() + 1) > 9 ? (timeDate.getMonth() + 1) : '0' + (timeDate.getMonth() + 1);
             const tDate = timeDate.getDate() > 9 ? timeDate.getDate() : '0' + timeDate.getDate();
             const tHours = timeDate.getHours() > 9 ? timeDate.getHours() : '0' + timeDate.getHours();
             const tMinutes = timeDate.getMinutes() > 9 ? timeDate.getMinutes() : '0' + timeDate.getMinutes();
             const days = ['星期日', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六'];
+            const currentWeekDay = days[timeDate.getDay()];
+            let afterWeekDayTemp = []
 
-            this.nowTime = `${tHours}:${tMinutes}`
-            this.currentWeekDay = days[timeDate.getDay()];
+            let day = timeDate.getDay() + 1;
+            for (let i = 0; i <= 5; i++) {
+                if (day > 6) day = 0
+                afterWeekDayTemp.push(day)
+                day++;
+            }
+            afterWeekDayTemp.forEach(v => {
+                this.afterWeekDay.push(days[v])
+            })
+
+            return {
+                hour: tHours,
+                minutes: tMinutes,
+                currentDay: currentWeekDay,
+            }
         },
         getWeather: function () {
             const api = "https://opendata.cwb.gov.tw/api/v1/rest/datastore/F-D0047-091?Authorization=CWB-E4B43E55-7ECD-434C-B6BC-FA647F1336F3";
             axios.get(api)
                 .then((res) => {
-                    // console.log(res.data.records.locations[0].location)
                     this.dataProcess(res.data.records.locations[0].location)
                 })
                 .catch(err => {
@@ -56,34 +84,81 @@ let vm = new Vue({
                 })
         },
         dataProcess: function (data) {
-            const weatherData = data
-            // console.log(weatherData)
+            const weatherData = data;
+
             weatherData.forEach(v => {
                 if (v.locationName === vm.currentLocation) {
                     // 顯示指定位置的資料
-                    console.log(v)
+                    // console.log(v)
                     const currentTemper = v.weatherElement[1].time[0].elementValue[0].value;
-                    // console.log('目前平均氣溫:', currentTemper)
-                    const weatherDetail = v.weatherElement[10].time[0].elementValue[0].value;
-                    // console.log('天氣狀態:', weatherDetail.split('。')[0])
-                    // TODO: 最高溫 最低溫
-                    // TODO 下一區段時間點的 溫度、狀態、下雨機率
-                    // TODO 接下來幾天天氣狀況、最高溫最低溫
+                    const weatherDetail = v.weatherElement[10].time[0].elementValue[0].value.split('。')[0];
+                    const currentMaxTemper = v.weatherElement[12].time[0].elementValue[0].value;
+                    const currentMinTemper = v.weatherElement[8].time[0].elementValue[0].value;
+                    const currentPop = v.weatherElement[0].time[0].elementValue[0].value;
+                    // next weather
+                    const nextPop = v.weatherElement[0].time[1].elementValue[0].value;
+                    const nextTemper = v.weatherElement[1].time[1].elementValue[0].value;
+                    const nextWeatherDetail = v.weatherElement[10].time[1].elementValue[0].value.split('。')[0];
 
-                    // TODO: 天氣狀態圖示怎麼顯示
+                    // Feature Weather Status
+                    let featureWeatherData = {
+                        afterWeekDay: this.afterWeekDay,
+                        details: [],
+                        maxTemper: [],
+                        minTemper: [],
+                        imgPath: [],
+                    }
+
+                    const dayCount = [2, 4, 6, 8, 10, 12]
+                    for (let i = 0; i < dayCount.length; i++) {
+                        const detail = v.weatherElement[10].time[dayCount[i]].elementValue[0].value.split('。')[0];
+                        const maxTemper = v.weatherElement[12].time[dayCount[i]].elementValue[0].value;
+                        const minTemper = v.weatherElement[8].time[dayCount[i]].elementValue[0].value;
+
+                        featureWeatherData.details.push(detail)
+                        featureWeatherData.imgPath.push(this.getWeatherIcon(detail, 6))
+                        featureWeatherData.maxTemper.push(maxTemper)
+                        featureWeatherData.minTemper.push(minTemper)
+                    }
+                    this.featureWeatherData = featureWeatherData;
+
+                    let featureWeatherData2 = [];
+                    for (let i = 0; i < 6; i++) {
+                        featureWeatherData2.push(
+                            {
+                                day: featureWeatherData.afterWeekDay[i],
+                                detail: featureWeatherData.details[i],
+                                maxTemper: featureWeatherData.maxTemper[i],
+                                minTemper: featureWeatherData.minTemper[i],
+                                imgPath: featureWeatherData.imgPath[i],
+                            }
+                        )
+                    }
                     // 天氣圖示對照表：https://www.cwb.gov.tw/V8/C/K/Weather_Icon.html
-                    // https://www.cwb.gov.tw/Data/js/WeatherIcon.js?_=1601091580326
 
-                    this.currentTemp = currentTemper;
-                    this.currentStatus = weatherDetail.split('。')[0];
-                    this.getWeatherIcon(this.currentStatus);
+                    this.currentTemper = currentTemper;
+                    this.currentStatus = weatherDetail;
+                    this.currentMaxTemper = currentMaxTemper;
+                    this.currentMinTemper = currentMinTemper;
+                    this.currentPop = currentPop;
+                    this.nextPop = nextPop;
+                    this.nextTemper = nextTemper;
+
+                    this.currentStatusImg = this.getWeatherIcon(weatherDetail, this.nowTime.hour);
+                    this.nextStatusImg = this.getWeatherIcon(nextWeatherDetail, 18);
+                    this.nextWeatherDetail = nextWeatherDetail;
+                    this.featureWeatherData2 = featureWeatherData2;
 
                 }
             })
         },
-        getWeatherIcon: function (currentStatus) {
-            const cors = "https://cors-anywhere.herokuapp.com/";
-            const iconApi = "https://www.cwb.gov.tw/Data/js/WeatherIcon.js";
+        /**
+         * @param {string} status
+         * @param hour
+         * @return {string} imgPath
+         */
+        getWeatherIcon: function (status, hour) {
+            // const cors = "https://cors-anywhere.herokuapp.com/";
             const IconPath = 'https://www.cwb.gov.tw/V8/assets/img/weather_icons/weathers/svg_icon';
             const weatherIcons = [
                 {'Wx': '01', 'C': '晴天', 'E': 'CLEAR'},
@@ -532,50 +607,25 @@ let vm = new Vue({
                 {'Wx': '42', 'C': '積冰', 'E': 'ICE'},
                 {'Wx': '42', 'C': '暴風雪', 'E': 'SNOW FLURRIES'}
             ];
+            const time = Number(hour);
+            let imgPath = '';
 
             weatherIcons.forEach(value => {
-                // console.log(value)
-                if(value.C === currentStatus){
+                if (value.C === status) {
                     const Wx = value.Wx;
-                    const Wname = value.C
-                    // console.log(this.nowTime.split(':')[0] > 18)
-                    const dayAndNight = this.nowTime.split(':')[0] > 18 ? 'night' : 'day';  // 判斷白天黑夜
-                    this.currentStatusImg = `${IconPath}/${dayAndNight}/${Wx}.svg`;  // 取得圖片路徑
+                    const dayAndNight = time >= 18 ? 'night' : 'day';  // 判斷白天黑夜
+                    imgPath = `${IconPath}/${dayAndNight}/${Wx}.svg`;
                 }
             })
-            // for (let i = 0; i < weatherIcons.length; i++) {
-            //     const Wx = weatherIcons[i].Wx;
-            //     const Wname = weatherIcons[i].C;
-            //
-            // }
-            /*
-            *   var Wx    = WeatherIcons[i].Wx;
-				var Wname = WeatherIcons[i][VER];
-
-				var MyTR = ''+
-				'<tr>'+
-					'<td>'+Wname+'</td>'+
-					'<td><span class="icon"><img src="'+IconPath+'/day/'+Wx+'.svg" alt="'+Wname+'" title="'+Wname+'" class="img-responsive"></span></td>'+
-					'<td><span class="icon"><img src="'+IconPath+'/night/'+Wx+'.svg" alt="'+Wname+'" title="'+Wname+'" class="img-responsive"></span></td>'+
-				'</tr>';
-            * */
-
-            // axios.get(cors + iconApi)
-            //     .then(res => {
-            //         // console.log(res.data)
-            //         iconProcess(res.data)
-            //     })
-            //     .catch(err => {
-            //         console.error(err)
-            //     })
-
-
-            function iconProcess(data) {
-                console.log(data)
-            }
-
+            return imgPath;
         },
-
-
+        changeLocation: function () {
+            if(this.selectLocation !== ''){
+                const sidebar = document.getElementById('toggleSidebar')
+                this.currentLocation = this.selectLocation;
+                this.getWeather();
+                sidebar.classList.remove('open')
+            }
+        }
     }
 })
