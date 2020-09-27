@@ -1,0 +1,26 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+
+}
+
+.grid {
+    display: flex;
+    flex-wrap: wrap;
+    width: 400px;
+    height: 400px;
+    background-color: blue;
+}
+
+.grid div {
+    width: 100px;
+    height: 100px;
+    background-color: yellow;
+    font-size: 60px;
+    text-align: center;
+    font-weight: bold;
+}
