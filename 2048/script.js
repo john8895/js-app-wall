@@ -6,6 +6,7 @@ let myApp = new Vue({
     mounted: function () {
         this.createBoard();
         this.moveLeft()
+        document.addEventListener('keyup', this.control)
     },
     methods: {
         createBoard: function () {
@@ -66,7 +67,7 @@ let myApp = new Vue({
                     let zeros = Array(missing).fill(0)  // 使用固定值填充陣列，可選START、END位置
                     let newRow = filteredRow.concat(zeros);
 
-                    // 數字都會靠右
+                    //
                     this.squares[i].innerHTML = newRow[0]
                     this.squares[i + 1].innerHTML = newRow[1]
                     this.squares[i + 2].innerHTML = newRow[2]
@@ -75,6 +76,32 @@ let myApp = new Vue({
             }
         },
         combineRow: function () {
+            for (let i = 0; i < 15; i++) {
+                if (this.squares[i].innerHTML === this.squares[i + 1].innerHTML) {
+                    let combinedTotal = parseInt(this.squares[i].innerHTML) + parseInt(this.squares[i + 1].innerHTML);
+                    this.squares[i].innerHTML = combinedTotal;
+                    this.squares[i + 1].innerHTML = 0;
+                }
+            }
+        },
+        control: function (e) {
+            if (e.keyCode === 39) {
+                this.keyRight();
+            } else if (e.keyCode === 37) {
+                this.keyLeft();
+            }
+        },
+        keyRight: function () {
+            this.moveRight();
+            this.combineRow();
+            this.moveRight();
+            this.generate();
+        },
+        keyLeft: function () {
+            this.moveLeft();
+            this.combineRow();
+            this.moveLeft();
+            this.generate();
 
         }
     }
