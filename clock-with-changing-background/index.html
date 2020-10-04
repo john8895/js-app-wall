@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>Clock With Changing Background</title>
+<!--    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.11/vue.js"></script>-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.0/moment.min.js"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<h1>Clock With Changing Background</h1>
+
+<div id="color-bkg"></div>
+<div class="container">
+    <h1>Analog &amp; Digital Clocks</h1>
+    <div class="box">
+
+        <div class="clock">
+            <span class="axis"></span>
+            <span class="hours"></span>
+            <span class="minutes"></span>
+            <span class="seconds"></span>
+            <div class="date">
+                <div class="dayMonth"></div>
+                <div class="year"></div>
+            </div>
+        </div>
+
+        <div class="digital">
+            <span class="digital-time"></span>
+        </div>
+    </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>

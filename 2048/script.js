@@ -4,6 +4,8 @@ let myApp = new Vue({
         squares: [],
         width: 4,
         resultDisplay: '',
+        score: 0,
+        scoreDisplay: 0,
     },
     mounted: function () {
         this.createBoard();
@@ -11,16 +13,12 @@ let myApp = new Vue({
         document.addEventListener('keyup', this.control)
     },
     methods: {
-        createBoard: function () {
+        createBoard: function () {  // 建立畫布
             const gridDisplay = document.querySelector('.grid');
-            const scoreDisplay = document.getElementById('score')
-            // const resultDisplay = document.getElementById('result')
-            // const width = 4
-            // let squares = []
 
             for (let i = 0; i < this.width * this.width; i++) {
                 let square = document.createElement('div')
-                square.innerHTML = 0;
+                square.innerHTML = '0';
                 gridDisplay.appendChild(square)
                 this.squares.push(square)
             }
@@ -28,9 +26,11 @@ let myApp = new Vue({
             this.generate()
         },
         generate: function () {  // generate a number randomly
-            let randomNumber = Math.floor(Math.random() * this.squares.length)
-            if (this.squares[randomNumber].innerHTML === '0') {  // 0 is a string NOT number
+            let randomNumber = Math.floor(Math.random() * this.squares.length)  // 1-16 number
+            console.log(randomNumber)
+            if (this.squares[randomNumber].innerHTML == 0) {  // 0 is a string NOT number
                 this.squares[randomNumber].innerHTML = 2
+                this.checkForGameOver()
             } else this.generate()
         },
         moveRight: function () {  // swipe right
@@ -121,8 +121,11 @@ let myApp = new Vue({
                     let combinedTotal = parseInt(this.squares[i].innerHTML) + parseInt(this.squares[i + 1].innerHTML);
                     this.squares[i].innerHTML = combinedTotal;
                     this.squares[i + 1].innerHTML = 0;
+                    this.score += combinedTotal
+                    this.scoreDisplay = this.score;
                 }
             }
+
             this.checkForWin()
         },
         combineColumn: function () {
@@ -131,8 +134,11 @@ let myApp = new Vue({
                     let combinedTotal = parseInt(this.squares[i].innerHTML) + parseInt(this.squares[i + this.width].innerHTML);
                     this.squares[i].innerHTML = combinedTotal;
                     this.squares[i + this.width].innerHTML = 0;
+                    this.score += combinedTotal;
+                    this.scoreDisplay = this.score;
                 }
             }
+
             this.checkForWin()
         },
         control: function (e) {
@@ -173,14 +179,24 @@ let myApp = new Vue({
         },
         checkForWin: function () {
             for (let i = 0; i < this.squares.length; i++) {
-                if (this.squares[i].innerHTML === 2048){
+                if (this.squares[i].innerHTML === 2048) {
                     this.resultDisplay = 'You Win!'
                     document.removeEventListener('keyUp', this.control)
                 }
             }
         },
-        checkForGameOver: function() {
+        checkForGameOver: function () {
             let zeros = 0
-
-        }    }
+            for (let i = 0; i < this.squares.length; i++) {
+                if (this.squares[i].innerHTML == 0) {
+                    zeros++
+                }
+            }
+            // console.log('zeros:',zeros)
+            if(zeros == 0) {
+                this.resultDisplay = 'You Lose!'
+                document.removeEventListener('keyUp', this.control)
+            }
+        }
+    }
 })
