@@ -12,6 +12,7 @@ function rotate() {
     const minutes = currentDate.getMinutes()
     const seconds = currentDate.getSeconds()
 
+    // 把時間轉成分數
     const secondsFraction = seconds / 60  // 一分六十秒，得到秒數的分數
     const minutesFraction = (secondsFraction + minutes) / 60
     const hoursFraction = (minutesFraction + hours) / 12
@@ -27,9 +28,9 @@ function rotate() {
     const minutesRotate = minutesFraction * 360
     const hoursRotate = hoursFraction * 360
 
+    // 賦予旋轉角度CSS
     // apply the rotate style to each element
     // use backtick `` instead of single quotes ''
-
     secondHand.style.transform = `rotate(${secondsRotate}deg)`
     minuteHand.style.transform = `rotate(${minutesRotate}deg)`
     hourHand.style.transform = `rotate(${hoursRotate}deg)`
