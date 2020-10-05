@@ -41,6 +41,25 @@ body {
     bottom: 50%;
     left: 50%;
     transform: translateX(-50%) rotate(90deg);
+    transform-origin: bottom;
     border-top-left-radius: 7px;
     border-top-right-radius: 7px;
+}
+
+.hour {
+    width: 8px;
+    height: 28%;
+    background-color: #000;
+}
+
+.minutes {
+    width: 5px;
+    height: 38%;
+    background-color: #000;
+}
+
+.seconds {
+    width: 3px;
+    height: 40%;
+    background-color: #ff0000;
 }
