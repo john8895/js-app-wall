@@ -6,5 +6,17 @@ buttons.forEach(button => {
 })
 
 function calculator(event) {
+    const clickedButtonValue = event.target.value
 
+    if(clickedButtonValue === '='){
+        if(display.value != ''){
+            display.value = eval(display.value)
+        }
+    } else if(clickedButtonValue === 'C'){
+        display.value =''
+    } else {
+        display.value += clickedButtonValue;
+    }
 }
+// 嘗試添加更多按鈕，例如退格鍵，以清除最後一個字符。
+// 或添加更多的運算符，例如餘數運算符（％）。只是玩...
