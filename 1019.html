@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+    fetch("https://google-translate1.p.rapidapi.com/language/translate/v2/languages", {
+        "method": "GET",
+        "headers": {
+            "x-rapidapi-host": "google-translate1.p.rapidapi.com",
+            "x-rapidapi-key": "572de6cfafmshbcf344077aa6dbap15f4c9jsnfa4d2e90051e",
+            "accept-encoding": "application/gzip"
+        }
+    })
+        .then(response => {
+            console.log(response);
+        })
+        .catch(err => {
+            console.log(err);
+        });
+</script>
+</body>
+</html>
