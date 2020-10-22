@@ -1,0 +1,283 @@
+/* !! IMPORT dolly.min.css !! */
+/* the code below it's only for the demo */
+/* RESET */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+ul[class],
+ol[class] {
+    padding: 0;
+}
+
+body,
+h1,
+h2,
+h3,
+h4,
+p,
+ul[class],
+ol[class],
+li,
+figure,
+figcaption,
+blockquote,
+dl,
+dd {
+    margin: 0;
+}
+
+ul[class],
+ol[class] {
+    list-style: none;
+}
+
+a:not([class]) {
+    text-decoration-skip-ink: auto;
+}
+
+img {
+    max-width: 100%;
+    display: block;
+}
+
+article > * + * {
+    margin-top: 1em;
+}
+
+input,
+button,
+textarea,
+select {
+    font: inherit;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+}
+
+/* RESET */
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-size: 100%;
+    font: inherit;
+    vertical-align: baseline;
+}
+
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section {
+    display: block;
+}
+
+ol, ul {
+    list-style: none;
+}
+
+blockquote, q {
+    quotes: none;
+}
+
+blockquote:before, blockquote:after,
+q:before, q:after {
+    content: '';
+    content: none;
+}
+
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+button {
+    border: none;
+    box-shadow: none;
+    background-color: transparent;
+    outline: none;
+    cursor: pointer;
+}
+
+/* BREAKPOINTS */
+/* COLORS */
+::-moz-selection {
+    background: #ff7474;
+}
+
+::selection {
+    background: #ff7474;
+}
+
+/* TEXTS */
+.bold {
+    font-family: "Palanquin Dark", sans-serif;
+}
+
+.dolly-font {
+    font-family: "Righteous", sans-serif;
+}
+
+body, html {
+    font-family: "Palanquin", sans-serif;
+    background-color: white;
+}
+
+/* BUTTONS */
+.btn {
+    padding: 5px 25px;
+    border-radius: 30px;
+    text-decoration: none;
+    margin: 10px;
+    display: block;
+    color: white;
+    background-color: #ff7474;
+}
+
+.btn:hover {
+    background-color: white;
+    color: #ff7474;
+}
+
+/* HEADER */
+.header {
+    padding: 10px 30px;
+    position: fixed;
+    width: 100%;
+    left: 0;
+    top: 0;
+    height: auto;
+    z-index: 99999;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+@media (max-width: 778px) {
+    .header {
+        padding: 0px 20px;
+    }
+}
+
+.header .nav button, .header .nav a {
+    text-decoration: none;
+    margin-left: 20px;
+    color: black;
+}
+
+.header .nav .btn {
+    color: white;
+}
+
+.header .nav .btn:hover {
+    background-color: white;
+    color: #ff7474;
+}
+
+.header .nav .dolly-anchor.active-anchor {
+    color: #ff7474;
+}
+
+.header .logo {
+    font-size: 50px;
+    color: #ff7474;
+    cursor: pointer;
+    z-index: 99999;
+    position: relative;
+}
+
+@media (max-width: 778px) {
+    .header .logo {
+        font-size: 40px;
+    }
+}
+
+.link {
+    font-size: 18px;
+    position: fixed;
+    bottom: 15px;
+    right: 15px;
+    color: white;
+}
+
+.link a {
+    text-decoration: none;
+    color: #ff7474;
+}
+
+/* LAYERS */
+.dolly-layer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+}
+
+.dolly-layer h1, .dolly-layer h3 {
+    font-size: 8vw;
+    line-height: 8vw;
+}
+
+.dolly-layer .logo-wrap {
+    position: relative;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.dolly-layer .logo-wrap h1 {
+    font-size: 10vw;
+    line-height: 11vw;
+}
+
+.dolly-layer .logo-wrap .claim {
+    position: absolute;
+    font-size: 1.8vw;
+    color: white;
+    bottom: -13px;
+    width: 100%;
+}
+
+.dolly-layer p {
+    font-size: 40px;
+    background-color: #ff7474;
+    padding: 10px;
+    line-height: 50px;
+}
+
+.dolly-layer span {
+    color: white;
+    font-size: 30px;
+}
+
+.dolly-layer:nth-child(1) {
+    background-color: #FFAB00;
+}
+
+.dolly-layer:nth-child(2) {
+    background-color: #00BFA5;
+}
+
+.dolly-layer:nth-child(3) {
+    background-color: #304FFE;
+}.dolly-layer:nth-child(4) {
+    background-color: #ff0000;
+}

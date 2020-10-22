@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>Title</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div id="myApp"
+     style="height:250px;width:250px;border: 2px solid red; background-image: linear-gradient(315deg, #eec0c6 0%, #e58c8a 74%);">
+    擷取區塊
+</div>
+<button id="btnSave" class="btn btn-danger" onclick="shot()">Download screenshot</button>
+<script src="http://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+<script>
+    function shot() {
+        // html2canvas(el, option)
+        // option: https://html2canvas.hertzen.com/configuration
+        html2canvas(document.getElementById('myApp')).then(function(canvas) {
+            document.body.appendChild(canvas);
+
+            let a = document.createElement('a');
+            a.href = canvas.toDataURL('image/jpeg').replace("image/jpeg", "image/octet-stream");
+            a.download = 'download.jpg';
+            a.click();
+        })
+    }
+</script>
+
+
+
+<script src="script.js"></script>
+</body>
+</html>

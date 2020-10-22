@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>Title</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>Hello!Youtube iframe API</h1>
+<!--    <div class="embed-responsive embed-responsive-16by9">-->
+<!--        <div id="player"></div>-->
+<!--    </div>-->
+
+    <div class="embed-responsive embed-responsive-16by9">
+        <iframe id="player" src="https://www.youtube.com/watch?v=Mp_XNVxe4VM?enablejsapi=1&allowsInlineMediaPlayback=true&playsinline=1&origin=http://localhost:63342" frameborder="0"></iframe>
+    </div>
+
+
+    <script src="https://www.youtube.com/iframe_api"></script>
+    <script>
+        var player;
+        function onYouTubeIframeAPIReady(){
+            player = new YT.Player('player', {
+                events: {
+                    'onReady': onPlayerReady
+                }
+            })
+        }
+
+        function onPlayerReady(e){
+            e.target.mute().playVideo();
+        }
+    </script>
+<!--    <script src="script.js"></script>-->
+</body>
+</html>

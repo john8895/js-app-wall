@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>Title</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.2/jspdf.debug.js"></script>
+<script>
+        var doc = new jsPDF();
+        doc.text("Hello world!", 20, 20);
+        doc.text("This is client-side Javascript, pumping out a PDF.", 20, 30);
+        doc.addPage("a6", "l");
+        doc.text("Do you like that?", 20, 20);
+        doc.save('hello.pdf');
+    </script>
+    <script src="script.js"></script>
+</body>
+</html>

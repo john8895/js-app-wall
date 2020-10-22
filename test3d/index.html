@@ -1,0 +1,60 @@
+<!-- DOLLY BASIC STRUCTURE -->
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>Title</title>
+    <link href="https://fonts.googleapis.com/css2?family=Palanquin+Dark:wght@600&family=Palanquin:wght@300&family=Righteous&display=swap"
+          rel="stylesheet">
+
+    <link href="https://www.dinoballiana.com/dolly/src/css/dolly.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<!-- 01 - Navigation (optional) - needs class "dolly-navigation" -->
+<header class="header dolly-navigation">
+    <h1 data-anchor="dolly-cover" class="logo dolly-font dolly-anchor">dolly</h1>
+    <nav class="nav">
+        <ul>
+            <!-- 01b - Anchors  - needs class "dolly-anchor" and a data-anchor with value of the anchor layer id -->
+            <li>
+                <button data-anchor="layer1" class="dolly-anchor">Layer 1</button>
+            </li>
+            <li>
+                <button data-anchor="layer2" class="dolly-anchor">Layer 2</button>
+            </li>
+            <li>
+                <button data-anchor="layer3" class="dolly-anchor">Layer 3</button>
+            </li>
+            <li><a href="https://www.dinoballiana.com/dolly/download/dolly_alpha_v01.zip" class="btn download-btn bold">download</a>
+            </li>
+        </ul>
+    </nav>
+</header>
+
+<!-- 02 - Container - needs class "dolly-container" -->
+<div id="dolly-container" class="dolly-container">
+    <!-- 03 - Wrapper - needs class "dolly-wrap" -->
+    <div class="dolly-wrap">
+        <!-- 04 - Layers - needs class "dolly-layer" -->
+        <section id="layer1" class="dolly-layer">
+            <div class="logo-wrap">
+                <h1 class="dolly-font">dolly</h1>
+                <h2 class="bold claim">3D scroll easy!</h2>
+            </div>
+
+            <p class="bold">Full-page scroll</p>
+            <span>&darr;</span>
+        </section>
+        <section id="layer2" class="dolly-layer"><h3 class="bold">Layer 2</h3></section>
+        <section id="layer3" class="dolly-layer"><h3 class="bold">Layer 3</h3></section>
+        <section id="layer4" class="dolly-layer"><h3 class="bold">Layer 4</h3></section>
+    </div>
+</div>
+<p class="link bold">Visit <a target="_blank" href="https://www.dinoballiana.com/dolly">dinoballiana.com/dolly</a></p>
+
+<script src="https://www.dinoballiana.com/dolly/src/js/dolly.min.js"></script>
+<script src="script.js"></script>
+</body>
+</html>

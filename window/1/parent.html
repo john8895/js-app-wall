@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <title>父頁面操作子頁面【父頁面】</title>
+</head>
+<body>
+<h1>嗨～我是父視窗！</h1>
+<button id="open">打開子視窗</button>
+<button id="close">重整當前並關閉打開的子視窗</button>
+<button id="changeColor">改變子視窗顏色</button>
+<button id="stopChangeColor">停止改變顏色</button>
+<script>
+    onload = function () {
+        const openBtn = document.getElementById('open')
+        const closeBtn = document.getElementById('close')
+        const changeColor = document.getElementById('changeColor')
+
+        let newWindow
+        openBtn.onclick = function(){
+            newWindow = window.open('child.html', 'child', 'height=500,width=500, top=200, left=200,toolbar=no,menubar=no,scrollbars=no,resizable=no,location=no,status=no')
+        }
+        closeBtn.onclick = function () {
+            window.location.href = window.location.href
+            newWindow.close();
+        }
+        changeColor.onclick =function () {
+            // console.log(newWindow)
+            newWindow.changeChildColor();
+        }
+        stopChangeColor.onclick =function(){
+            newWindow.stopChangeColor();
+
+        }
+        console.log("%c" + "臭安安賽賽了！！！", "color:red;font-size:50px");
+
+        function call(){
+            alert('我是父視窗的方法')
+        }
+        window.call = call
+
+    }
+
+
+</script>
+
+</body>
+</html>

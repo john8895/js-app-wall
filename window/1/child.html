@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <title>子頁面</title>
+</head>
+<body>
+<h1>哈囉～我是子視窗！</h1>
+<button id="close">關閉當前頁面</button>
+<button id="call">調用父視窗方法</button>
+<a href="javascript:;" onclick="refreshParent()">刷新父頁面並關閉當前視窗</a>
+
+<script>
+
+    const closeBtn = document.getElementById('close')
+    const callHref = document.getElementById('call')
+
+    closeBtn.onclick = function () {
+        window.close();
+    }
+
+    function refreshParent() {
+        window.location.href = window.location.href
+        if(window.opener.progressWindow){
+            window.opener.progressWindow.close()
+        }
+        window.close()
+    }
+    callHref.onclick = function(){
+        window.opener.call()
+    }
+
+    let timId;
+    timId = setInterval(changeChildColor, 300)
+
+    function changeChildColor() {
+        const arr = ['000000', 'ffffff']
+        const random = Math.floor(Math.random() * arr.length)
+
+        document.body.style.backgroundColor = '#' + arr[random]
+    }
+
+    function stopChangeColor() {
+        clearInterval(timId)
+    }
+
+</script>
+
+</body>
+</html>

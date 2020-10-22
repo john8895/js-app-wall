@@ -1,0 +1,32 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>c</title>
+    <link rel="stylesheet" href="css/main.css"/>
+</head>
+<body>
+<input type="button" id="close" value="关闭当前页面"/>
+<a href="javascript:void(0)" onclick="refreshParent()">刷新父窗口并关闭当前窗口</a>
+<input type="button" id="call" value="调用父窗口方法"/>
+</body>
+<script type="text/javascript">
+    var cc = document.getElementById("close");
+    cc.onclick = function () {
+        window.close();
+    };
+
+    function refreshParent() {
+        window.opener.location.href = window.opener.location.href;
+        if (window.opener.progressWindow) {
+            window.opener.progressWindow.close();
+        }
+        window.close();
+    };
+    var pp = document.getElementById("call");
+    pp.onclick = function () {
+        window.opener.call();
+    };
+</script>
+</html>

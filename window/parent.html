@@ -1,0 +1,34 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>p</title>
+    <link rel="stylesheet" href="css/main.css"/>
+</head>
+<body>
+<input type="button" id="open" value="打开子窗口"/>
+
+<input type="button" id="close" value="刷新当前并且关闭打开的子窗口"/>
+</body>
+<script type="text/javascript">
+    window.onload = function () {
+        var cc = document.getElementById("open");
+        var newwin;
+        cc.onclick = function () {
+            newwin = window.open("child.html", "child", 'height=500, width=500, top=200,left=200, toolbar=no, menubar=no, scrollbars=no, resizable=no,location=no, status=no');
+        };
+
+        var ss = document.getElementById("close");
+        ss.onclick = function () {
+            window.location.href = window.location.href;
+            newwin.close();
+        };
+
+        function call() {
+            alert(1);
+        };
+        window.call = call;
+    };
+</script>
+</html>
