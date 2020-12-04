@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>Image Compress</title>
+</head>
+<body>
+<input type="file" name="upload-image" id="upload-image">
+<p class="before-compression"></p>
+<p class="after-compression"></p>
+
+<img src="" alt="" class="before">
+<canvas style="display:none;"></canvas>
+<img src="" alt="" class="after">
+<script>
+    const readAndCompress = (e) => {
+        const size = `Before Compression: ${(
+            e.target.files[0].size /
+            (1000 * 1024)
+        ).toFixed(2)} MB`;
+        document.querySelector(".before-compression").innerHTML = size;
+        const reader = new FileReader();
+        reader.readAsDataURL(e.target.files[0]);
+
+        reader.onload = (event) => {
+            const img = document.querySelector("img.before");
+            img.src = event.target.result; // base64 URL
+            (img.onload = () => {
+                const width = img.width;
+                const height = img.height;
+                const elem = document.querySelector("canvas");
+                elem.width = width;
+                elem.height = height;
+                const ctx = elem.getContext("2d");
+                ctx.drawImage(img, 0, 0, width, height); // 將圖像源繪製至 Canvas 上
+                const webp = ctx.canvas.toDataURL("image/webp", 0.9); // 回傳canvas轉成圖片URL（Base64）
+                console.log(webp);
+                const imgAfter = document.querySelector("img.after");
+                imgAfter.src = webp; // 顯示壓縮後圖片
+                const head = "data:image/webp;base64,";
+
+                // origBytes = base64Bytes * 3 / 4  ：換算取得原始檔案大小 / 1000 得到 KB
+                const imgFileSize = (
+                    Math.round(((webp.length - head.length) * 3) / 4) / 1000
+                ).toFixed(2);
+                document.querySelector(
+                    "p.after-compression"
+                ).innerHTML = `After Compression: ${imgFileSize} KB`;
+            }),
+                (reader.onerror = (error) => console.error(error));
+        };
+    };
+    document
+        .querySelector("input[name=upload-image]")
+        .addEventListener("change", (event) => readAndCompress(event));
+</script>
+</body>
+</html>

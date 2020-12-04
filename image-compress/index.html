@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+</head>
+<body>
+    <input type="file" onchange="previewFile()"><br>
+    <img id="source_img" src="" height="200" alt="Image preview...">
+    <br>
+    <button onclick="compressImage()">Compress</button>
+    <img src="" alt="Image Preview" id="target_img" height="200">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jic/2.0.2/JIC.min.js"></script>
+    <script>
+        // 圖片預覽
+        function previewFile() {
+            const preview = document.querySelector("img");
+            const file = document.querySelector("input[type=file]").files[0];
+            const reader = new FileReader();
+
+            reader.addEventListener(
+                "load",
+                function () {
+                    preview.src = reader.result;
+                },
+                false
+            );
+
+            if (file) {
+                reader.readAsDataURL(file); // 轉成 Base64 以預覽
+            }
+        }
+        // 壓縮圖片
+        function compressImage() {
+            const soure_img = document.getElementById("source_img"),
+                target_img = document.getElementById("target_img");
+            const quality = 90,
+                output_format = "jpg";
+            target_img.src = jic.compress(soure_img, quality, output_format).src;
+            // github: https://github.com/brunobar79/J-I-C
+        }
+    </script>
+</body>
+</html>

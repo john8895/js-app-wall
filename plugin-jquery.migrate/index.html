@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>test</title>
+<!--    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.6.1/jquery.min.js"></script>-->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-migrate-3.3.1.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
+
+    <script type="text/javascript">
+        // jQuery Migrate 遷移 高版本向下相容,低版本升級高版本console提示
+        // 自動轉換符合低版本語法，如低版本要升級可更換高版本JQ，如報錯就引入 Migrate，看console.log會提示應更換兼容的方法
+        $(document).ready(function(){
+            $("button").click(function(){
+                alert($("li").size());
+            });
+        });
+    </script>
+</head>
+<body>
+<button>测试按钮</button>
+<ul>
+    <li>Coffee</li>
+    <li>Milk</li>
+    <li>Soda</li>
+</ul>
+
+<a href="123" title="">123</a>
+<a href="123" title="">123</a>
+<a href="123" title="">123</a>
+<a href="123" title="">123</a>
+<img src="http://fakeimg.pl/200x200" alt="123">
+<img src="http://fakeimg.pl/200x200">
+<img src="http://fakeimg.pl/200x200" alt="">
+<script type="text/javascript" src="pageTest.js"></script>
+</body>
+</html>

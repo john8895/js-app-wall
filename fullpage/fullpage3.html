@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>fullPage.js practice page</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullPage.js/3.0.9/fullpage.css">
+<!--    <script src="https://cdnjs.cloudflare.com/ajax/libs/fullPage.js/3.0.9/vendors/easings.js"></script>-->
+<!--    <script src="https://cdnjs.cloudflare.com/ajax/libs/fullPage.js/3.0.9/vendors/scrolloverflow.js"></script>-->
+<!--    <script src="https://cdnjs.cloudflare.com/ajax/libs/fullPage.js/3.0.9/fullpage.js"></script>-->
+    <script src="fullpage2.js"></script>
+    <style>
+        .section:nth-of-type(1){ background-color: purple;}
+        .section:nth-of-type(2){ background-color: yellow;}
+        .section:nth-of-type(3){ background-color: mediumvioletred;}
+        .section:nth-of-type(4){ background-color: skyblue;}
+    </style>
+</head>
+<body>
+
+<div id="fullpage">
+    <div class="section">Some section</div>
+    <div class="section">Some section
+        <div class="side" data-anchor="side1">Side 1</div>
+        <div class="side" data-anchor="side2">Side 2</div>
+        <div class="side" data-anchor="side3">Side 3</div>
+        <div class="side" data-anchor="side4">Side 4</div>
+    </div>
+    <div class="section">Some section</div>
+    <div class="section">Some section</div>
+</div>
+<script>
+    var myFullpage = new fullpage('#fullpage', {
+        // sectionColor: ['#f2f2f2', '#4bbfc3', '#7baabe', 'whitesmoke', '#ccddff'],
+        anchor: ['firstPage', 'secondPage', 'thirdPage', 'fourthPage'],
+        navigation: true,
+        menu: '#menu',
+        autoScrolling: true,
+        lockAnchors: true,
+    })
+</script>
+</body>
+</html>
